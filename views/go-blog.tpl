@@ -4,7 +4,7 @@
 			<div class="hero-text">
 				<h1>Welcome to the Go Blog/ Beego App!</h1>
 				<h2>This is My Test Version</h2>
-				<p>{{.Website}} {{.Email}} {{.EmailName}}</p>
+				<p>{{.Website}} {{.Email}} {{.EmailName}} {{.Id}}</p>
 			</div>
 		</div>
 	</div>

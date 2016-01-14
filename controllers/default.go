@@ -18,5 +18,6 @@ func (main *MainController) GoBlog() {
 	main.Data["Website"] = "My Go Blog"
 	main.Data["Email"] = "lynn.config@gmail.com"
 	main.Data["EmailName"] = "Liping Wang"
+	main.Data["Id"] = main.Ctx.Input.Param(":id")
 	main.TplNames = "go-blog.tpl"
 }
