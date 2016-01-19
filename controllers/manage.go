@@ -85,6 +85,7 @@ func (manage *ManageController) View() {
 }
 
 func (manage *ManageController) Add() {
+	manage.TplNames = "add.tpl"
 	o := orm.NewOrm()
 	o.Using("default")
 	article := models.Article{}
