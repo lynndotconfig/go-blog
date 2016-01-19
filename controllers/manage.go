@@ -3,8 +3,10 @@ package controllers
 import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
+	"github.com/astaxie/beego/validation"
 	"strconv"
 	"goblog/models"
+	"fmt"
 )
 
 type ManageController struct {
@@ -60,4 +62,53 @@ func (manage *ManageController) Update() {
 	// redirect afterwards
 	manage.Redirect("/manage/view", 302)
 
+}
+
+func (manage *ManageController) View() {
+	flash := beego.ReadFromRequest(&manage.Controller)
+
+	if ok := flash.Data["error"]; ok != "" {
+		// Display error message
+		manage.Data["error"] = ok
+	}
+
+	o := orm.NewOrm()
+	o.Using("default")
+
+	var articles []*models.Article
+	num, err := o.QueryTable("Article").All(&articles)
+
+	if err != orm.ErrNoRows && num > 0 {
+		manage.Data["records"] = articles
+	}
+}
+
+func (manage *ManageController) Add() {
+	o := orm.NewOrm()
+	o.Using("default")
+	article := models.Article{}
+
+	if err := manage.ParseForm(&article); err != nil {
+		beego.Error("Couldn't parse the form. Reson: ", err)
+	} else {
+		manage.Data["Article"] = article
+	}
+
+	if manage.Ctx.Input.Method() == "POST" {
+		valid := validation.Validation{}
+		isValid, _ := valid.Valid(article)
+		if !isValid {
+			manage.Data["Error"] = valid.ErrorsMap
+			beego.Error("Form didn't validate.")
+		} else {
+			id, err := o.Insert(&article)
+			if err == nil {
+				msg := fmt.Sprintf("Article inserted with id: ", id)
+				beego.Debug(msg)
+			} else {
+				msg := fmt.Sprintf("Couldn't insert new article. Reason: ", err)
+				beego.Debug(msg)
+			}
+		}
+	}
 }
