@@ -8,5 +8,5 @@ type Article struct{
 }
 
 func (a *Article) TableName() string {
-	return "articles"
+	return "article"
 }

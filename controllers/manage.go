@@ -66,6 +66,7 @@ func (manage *ManageController) Update() {
 
 func (manage *ManageController) View() {
 	flash := beego.ReadFromRequest(&manage.Controller)
+	manage.TplNames = "view.tpl"
 
 	if ok := flash.Data["error"]; ok != "" {
 		// Display error message
