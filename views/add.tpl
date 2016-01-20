@@ -4,9 +4,12 @@
 			<div class="hero-text">
 				<h1>Welcome to the Go Blog/ Beego App!</h1>
 				<h2>This is My Test Version</h2>
-				<form method="POST">
-					<input>{{.Article}}</input>
-					<button type="submit" name="submit"/>
+				<form id="form" method="POST">
+					<input type="text" id="id" />
+					<input type="text" id="Name" />
+					<input type="text" id="client" />
+					<input type="text" id="url" />
+					<input type="submit" value="Create"/>
 				</form>
 			</div>
 		</div>

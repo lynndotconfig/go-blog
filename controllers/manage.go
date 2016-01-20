@@ -91,7 +91,7 @@ func (manage *ManageController) Add() {
 	article := models.Article{}
 
 	if err := manage.ParseForm(&article); err != nil {
-		beego.Error("Couldn't parse the form. Reson: ", err)
+		beego.Error("Couldn't parse the form. Reason: ", err)
 	} else {
 		manage.Data["Article"] = article
 	}
@@ -101,7 +101,7 @@ func (manage *ManageController) Add() {
 		isValid, _ := valid.Valid(article)
 		if !isValid {
 			manage.Data["Error"] = valid.ErrorsMap
-			beego.Error("Form didn't validate.")
+			beego.Error("Form didn't validate.", valid.ErrorsMap)
 		} else {
 			id, err := o.Insert(&article)
 			if err == nil {
